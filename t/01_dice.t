@@ -60,4 +60,23 @@ subtest 'book title searchs' => sub {
     }
 };
 
+subtest 'arrayref input' => sub {
+    my ($str1, $str2, $xscore) = ('FRANCE', 'REPUBLIC OF FRANCE', 56);
+    my ($aref1, $aref2);
+    for my $w (split ' ', lc $str1) {
+        push @$aref1, substr $w, $_, 2 for (0 .. length($w) - 2);
+    }
+    for my $w (split ' ', lc $str2) {
+        push @$aref2, substr $w, $_, 2 for (0 .. length($w) - 2);
+    }
+    my $score = 100 * sprintf '%.2f', coefficient($aref1, $aref2);
+    is $score, $xscore, "$str1 | $str2";
+};
+
+subtest 'bad input' => sub {
+    my ($str1, $str2, $xscore) = ('FRANCE', 'REPUBLIC OF FRANCE', 56);
+    my $aref = ['REPUBLIC', 'OF', 'FRANCE'];
+    is coefficient($str1, $aref), undef, "string and arrayref";
+};
+
 done_testing;

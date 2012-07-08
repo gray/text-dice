@@ -10,18 +10,30 @@ $VERSION = eval $VERSION;
 our @EXPORT = qw(coefficient);
 
 sub coefficient {
-    return 0 unless 2 == grep { defined and length } @_;
+    return unless 2 == @_;
 
-    my ($counts1, $counts2, %pairs1, %pairs2) = (0) x 2;
-    for my $w (split ' ', lc $_[0]) {
-        ++$counts1, ++$pairs1{substr $w, $_, 2} for (0 .. length($w) - 2);
+    my ($counts1, $counts2, $pairs1, $pairs2) = (0) x 2;
+    if (not ref $_[0] and not ref $_[1]) {
+        for my $w (split ' ', lc $_[0]) {
+            $counts1 += length($w) - 1;
+            ++$pairs1->{substr $w, $_, 2} for (0 .. length($w) - 2);
+        }
+        for my $w (split ' ', lc $_[1]) {
+            $counts2 += length($w) - 1;
+            ++$pairs2->{substr $w, $_, 2} for (0 .. length($w) - 2);
+        }
     }
-    for my $w (split ' ', lc $_[1]) {
-        ++$counts2, ++$pairs2{substr $w, $_, 2} for (0 .. length($w) - 2);
+    elsif ('ARRAY' eq ref $_[0] and 'ARRAY' eq ref $_[1]) {
+        $counts1 +=  @{$_[0]};
+        ++$pairs1->{$_} for @{$_[0]};
+
+        $counts2 +=  @{$_[1]};
+        ++$pairs2->{$_} for @{$_[1]};
     }
+    else { return }
 
     my ($smaller, $larger) = $counts1 > $counts2
-        ? \ (%pairs2, %pairs1) : \ (%pairs1, %pairs2);
+        ? ($pairs2, $pairs1) : ($pairs1, $pairs2);
 
     my $intersection = 0;
     while (my ($pair, $count1) = each %{$smaller}) {
@@ -45,6 +57,8 @@ Text::Dice - Calculate Dice's coefficient of two strings
 
     use Text::Dice;
     $coefficient = coefficient $string1, $string2;
+    # or if you want to tokenize the strings yourself:
+    $coefficient = coefficient \%array1, \%array2;
 
 =head1 DESCRIPTION
 
@@ -57,13 +71,18 @@ robustness to changes of word order, and language independence.
 =head2 coefficient
 
     $coefficient = coefficient $string1, $string2
+    $coefficient = coefficient \@array1, \@array2
 
 Returns a number between 0 and 1; the higher the number, the greater the
 similarity.
 
+The two input strings are internally tokenized into character bigrams. If
+you wish to use a different tokenization method, pass in the resulting array
+references.
+
 =head1 SEE ALSO
 
-L<https://en.wikipedia.org/wiki/Dice%27s_coefficient>
+L<http://en.wikipedia.org/wiki/Dice%27s_coefficient>
 
 L<http://www.catalysoft.com/articles/StrikeAMatch.html>
 
