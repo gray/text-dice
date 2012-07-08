@@ -1,5 +1,9 @@
 Revision history for Text-Dice
 
+0.03  Sun Jul  8 06:24:47 UTC 2012
+    - Prevented division by zero error when both strings contained no tokens.
+    - Fixed example script.
+
 0.02  Sun Jul  8 03:29:58 UTC 2012
     - Accepted array references as inputs to permit custom tokenization.
 
