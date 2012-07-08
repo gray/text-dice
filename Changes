@@ -1,4 +1,7 @@
 Revision history for Text-Dice
 
+0.02  Sun Jul  8 03:29:58 UTC 2012
+    - Accepted array references as inputs to permit custom tokenization.
+
 0.01  Mon Jan 16 20:25:16 UTC 2012
     - Initial distribution.
