@@ -2,8 +2,7 @@
 use strict;
 use warnings;
 
-use Benchmark     qw(timethese);
-use Capture::Tiny qw(capture_stdout);
+use Benchmark qw(timethese);
 
 use String::Similarity  ();
 use Text::Brew          ();
