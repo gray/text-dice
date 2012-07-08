@@ -32,6 +32,8 @@ sub coefficient {
     }
     else { return }
 
+    return 0 unless $counts1 and $counts2;
+
     my ($smaller, $larger) = $counts1 > $counts2
         ? ($pairs2, $pairs1) : ($pairs1, $pairs2);
 
