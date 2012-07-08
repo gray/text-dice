@@ -4,6 +4,6 @@ use warnings;
 
 use Text::Dice;
 
-die "Usage: $0 $string1 $string2" unless 2 == @ARGV;
+die "Usage: $0 \$string1 \$string2" unless 2 == @ARGV;
 
-print "%f\n", dice @ARGV;
+printf "%.2f\n", coefficient @ARGV;
