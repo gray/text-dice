@@ -64,44 +64,59 @@ __END__
 
 =head1 BENCHMARKS
 
-  2 short strings
-                  Rate Compare    Brew WagnerFischer Levenshtein  Dice LevenshteinXS Similarity
-  Compare          486/s      --    -31%          -63%        -88%  -98%         -100%      -100%
-  Brew             700/s     44%      --          -46%        -83%  -98%         -100%      -100%
-  WagnerFischer   1299/s    167%     86%            --        -69%  -96%         -100%      -100%
-  Levenshtein     4127/s    750%    490%          218%          --  -87%         -100%      -100%
-  Dice           31096/s   6301%   4345%         2294%        653%    --          -96%       -97%
-  LevenshteinXS 871438/s 179289% 124477%        66980%      21013% 2702%            --       -11%
-  Similarity    978326/s 201293% 139757%        75208%      23603% 3046%           12%         --
+                    Rate Compare   Brew WagnerFischer Levenshtein  Fuzzy Damerau  Dice Damerau_XS Levenshtein_XS LevenshteinXS Similarity
+Compare           1039/s      --   -52%          -70%        -78%   -79%    -83%  -99%       -99%          -100%         -100%      -100%
+Brew              2143/s    106%     --          -39%        -54%   -56%    -64%  -98%       -99%           -99%         -100%      -100%
+WagnerFischer     3502/s    237%    63%            --        -25%   -28%    -42%  -96%       -98%           -98%         -100%      -100%
+Levenshtein       4664/s    349%   118%           33%          --    -4%    -23%  -95%       -97%           -98%         -100%      -100%
+Fuzzy             4872/s    369%   127%           39%          4%     --    -19%  -95%       -97%           -98%         -100%      -100%
+Damerau           6024/s    480%   181%           72%         29%    24%      --  -93%       -96%           -97%         -100%      -100%
+Dice             90649/s   8622%  4129%         2489%       1844%  1761%   1405%    --       -44%           -61%          -94%       -96%
+Damerau_XS      160490/s  15342%  7388%         4483%       3341%  3194%   2564%   77%         --           -30%          -89%       -92%
+Levenshtein_XS  230400/s  22068% 10649%         6479%       4840%  4629%   3725%  154%        44%             --          -84%       -89%
+LevenshteinXS  1451196/s 139527% 67605%        41341%      31014% 29689%  23992% 1501%       804%           530%            --       -29%
+Similarity     2047995/s 196948% 95448%        58384%      43810% 41940%  33899% 2159%      1176%           789%           41%         --
 
-  utf-8 strings
-                  Rate Compare    Brew WagnerFischer Levenshtein  Dice Similarity LevenshteinXS
-  Compare          329/s      --    -16%          -49%        -84%  -98%      -100%         -100%
-  Brew             389/s     19%      --          -39%        -81%  -97%      -100%         -100%
-  WagnerFischer    640/s     95%     64%            --        -69%  -96%      -100%         -100%
-  Levenshtein     2041/s    521%    424%          219%          --  -86%       -99%         -100%
-  Dice           14721/s   4381%   3681%         2199%        621%    --       -92%          -96%
-  Similarity    177069/s  53802%  45384%        27554%       8577% 1103%         --          -57%
-  LevenshteinXS 411162/s 125063% 105516%        64114%      20049% 2693%       132%            --
+utf-8 strings
+                    Rate Compare   Brew WagnerFischer Levenshtein  Fuzzy Damerau  Dice Damerau_XS Levenshtein_XS Similarity LevenshteinXS
+Compare            881/s      --   -44%          -69%        -77%   -78%    -82%  -99%       -99%          -100%      -100%         -100%
+Brew              1570/s     78%     --          -45%        -60%   -61%    -69%  -98%       -99%           -99%      -100%         -100%
+WagnerFischer     2847/s    223%    81%            --        -27%   -29%    -43%  -97%       -98%           -99%      -100%         -100%
+Levenshtein       3877/s    340%   147%           36%          --    -3%    -22%  -95%       -97%           -98%      -100%         -100%
+Fuzzy             4013/s    355%   156%           41%          4%     --    -20%  -95%       -97%           -98%      -100%         -100%
+Damerau           4986/s    466%   218%           75%         29%    24%      --  -94%       -97%           -98%       -99%         -100%
+Dice             81757/s   9177%  5107%         2772%       2009%  1937%   1540%    --       -45%           -64%       -91%          -94%
+Damerau_XS      148882/s  16794%  9382%         5130%       3740%  3610%   2886%   82%         --           -34%       -83%          -88%
+Levenshtein_XS  225989/s  25543% 14293%         7839%       5729%  5531%   4432%  176%        52%             --       -74%          -82%
+Similarity      866110/s  98179% 55063%        30325%      22241% 21481%  17270%  959%       482%           283%         --          -32%
+LevenshteinXS  1281531/s 145317% 81522%        44919%      32957% 31832%  25602% 1467%       761%           467%        48%            --
 
-  1 long, 1 short string
-                  Rate    Brew WagnerFischer Levenshtein Compare  Dice LevenshteinXS Similarity
-  Brew          0.448/s      --          -55%        -85%    -97% -100%         -100%      -100%
-  WagnerFischer  1.01/s    124%            --        -65%    -93% -100%         -100%      -100%
-  Levenshtein    2.92/s    550%          190%          --    -79%  -99%         -100%      -100%
-  Compare        13.9/s   2994%         1278%        376%      --  -94%          -99%       -99%
-  Dice            249/s  55491%        24663%       8447%   1697%    --          -74%       -81%
-  LevenshteinXS   963/s 214679%        95571%      32922%   6841%  286%            --       -27%
-  Similarity     1320/s 294179%       130984%      45145%   9410%  429%           37%         --
+1 long, 1 short string
+                 Rate    Brew   Fuzzy WagnerFischer Levenshtein Damerau Compare Damerau_XS  Dice Levenshtein_XS LevenshteinXS Similarity
+Brew           2.30/s      --    -19%          -42%        -56%    -69%    -96%       -99% -100%          -100%         -100%      -100%
+Fuzzy          2.84/s     23%      --          -29%        -46%    -61%    -95%       -99% -100%          -100%         -100%      -100%
+WagnerFischer  4.00/s     74%     41%            --        -24%    -45%    -94%       -99% -100%          -100%         -100%      -100%
+Levenshtein    5.26/s    128%     85%           32%          --    -28%    -92%       -98%  -99%          -100%         -100%      -100%
+Damerau        7.32/s    218%    157%           83%         39%      --    -88%       -97%  -99%           -99%         -100%      -100%
+Compare        62.0/s   2591%   2080%         1450%       1078%    747%      --       -77%  -93%           -95%          -98%       -99%
+Damerau_XS      275/s  11854%   9587%         6786%       5133%   3664%    344%         --  -69%           -76%          -91%       -95%
+Dice            876/s  37933%  30718%        21808%      16550%  11876%   1313%       218%    --           -23%          -70%       -84%
+Levenshtein_XS 1144/s  49545%  40127%        28498%      21634%  15533%   1745%       315%   31%             --          -61%       -80%
+LevenshteinXS  2911/s 126220% 102256%        72665%      55201%  39678%   4595%       957%  232%           154%            --       -48%
+Similarity     5581/s 242105% 196157%       139419%     105935%  76171%   8901%      1926%  537%           388%           92%         --
 
-  1 short, 1 long string
-                  Rate    Brew WagnerFischer Levenshtein Compare Similarity  Dice LevenshteinXS
-  Brew          0.525/s      --          -58%        -87%    -97%      -100% -100%         -100%
-  WagnerFischer  1.25/s    138%            --        -69%    -92%       -99% -100%         -100%
-  Levenshtein    3.98/s    658%          218%          --    -76%       -97%  -99%         -100%
-  Compare        16.3/s   2999%         1201%        309%      --       -86%  -94%          -98%
-  Similarity      119/s  22600%         9433%       2894%    632%         --  -57%          -87%
-  Dice            275/s  52245%        21882%       6804%   1589%       131%    --          -71%
-  LevenshteinXS   953/s 181492%        76159%      23850%   5760%       700%  247%            --
+1 short, 1 long string
+                 Rate    Brew  Fuzzy WagnerFischer Levenshtein Damerau Compare Damerau_XS Similarity  Dice Levenshtein_XS LevenshteinXS
+Brew           2.22/s      --   -19%          -46%        -58%    -72%    -96%       -99%      -100% -100%          -100%         -100%
+Fuzzy          2.73/s     23%     --          -33%        -49%    -65%    -96%       -99%       -99% -100%          -100%         -100%
+WagnerFischer  4.09/s     84%    50%            --        -23%    -48%    -93%       -99%       -99% -100%          -100%         -100%
+Levenshtein    5.34/s    140%    96%           31%          --    -32%    -91%       -98%       -99%  -99%           -99%         -100%
+Damerau        7.80/s    251%   186%           91%         46%      --    -87%       -98%       -99%  -99%           -99%         -100%
+Compare        62.4/s   2707%  2187%         1425%       1068%    699%      --       -81%       -88%  -93%           -94%          -97%
+Damerau_XS      331/s  14790% 12032%         7988%       6097%   4139%    430%         --       -38%  -62%           -67%          -86%
+Similarity      533/s  23864% 19426%        12918%       9873%   6723%    754%        61%         --  -38%           -48%          -77%
+Dice            860/s  38596% 31430%        20920%      16004%  10918%   1279%       160%        61%    --           -16%          -62%
+Levenshtein_XS 1018/s  45714% 37230%        24787%      18966%  12944%   1532%       208%        91%   18%             --          -55%
+LevenshteinXS  2286/s 102757% 83710%        55773%      42705%  29186%   3564%       591%       329%  166%           125%            --
 
 =cut
