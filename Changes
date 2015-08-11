@@ -1,5 +1,8 @@
 Revision history for Text-Dice
 
+0.04  Tue Aug 11 16:39:46 UTC 2015
+    - Add more modules to the benchmark script.
+
 0.03  Sun Jul  8 06:24:47 UTC 2012
     - Prevented division by zero error when both strings contained no tokens.
     - Fixed example script.
