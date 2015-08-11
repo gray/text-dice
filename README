@@ -17,7 +17,6 @@ DEPENDENCIES
 This module requires these other modules and libraries:
 
     Test::More
-    parent
 
 COPYRIGHT AND LICENCE
 

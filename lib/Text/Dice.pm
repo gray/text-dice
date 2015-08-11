@@ -2,7 +2,7 @@ package Text::Dice;
 
 use strict;
 use warnings;
-use parent qw(Exporter);
+use Exporter qw(import);
 
 our $VERSION = '0.03';
 $VERSION = eval $VERSION;

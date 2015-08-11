@@ -8,10 +8,10 @@ my %conf = (
     LICENSE        => 'perl',
     VERSION_FROM   => 'lib/Text/Dice.pm',
     ABSTRACT_FROM  => 'lib/Text/Dice.pm',
-    PREREQ_PM      => { 'parent' => 0, },
+    PREREQ_PM      => { Exporter => '5.57', },
     BUILD_REQUIRES => { 'Test::More' => 0.98, },
     META_MERGE     => {
-        resources =>  {
+        resources => {
             repository => 'https://github.com/gray/text-dice',
         },
     },
