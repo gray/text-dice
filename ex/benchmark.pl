@@ -4,29 +4,38 @@ use warnings;
 
 use Benchmark qw(timethese);
 
-use String::Similarity  ();
-use Text::Brew          ();
-use Text::Compare       ();
-use Text::Dice          ();
-use Text::Levenshtein   ();
-use Text::LevenshteinXS ();
-use Text::WagnerFischer ();
+use String::Similarity             ();
+use Text::Brew                     ();
+use Text::Fuzzy                    ();
+use Text::Compare                  ();
+use Text::Dice                     ();
+use Text::Levenshtein              ();
+use Text::Levenshtein::XS          ();
+use Text::LevenshteinXS            ();
+use Text::Levenshtein::Damerau::PP ();
+use Text::Levenshtein::Damerau::XS ();
+use Text::WagnerFischer            ();
 
 my @strings;
 
 my %algos = (
-    Similarity    => sub { String::Similarity::similarity(@strings) },
-    Brew          => sub {
+    Brew => sub {
         Text::Brew::distance(@strings, { -output => 'distance' });
     },
-    Compare       => sub {
+    Compare => sub {
         my $tc = Text::Compare->new;
         $tc->similarity(@strings);
     },
-    Dice          => sub { Text::Dice::coefficient(@strings) },
-    Levenshtein   => sub { Text::Levenshtein::fastdistance(@strings) },
-    LevenshteinXS => sub { Text::LevenshteinXS::distance(@strings) },
-    WagnerFischer => sub { Text::WagnerFischer::distance(@strings) },
+    Damerau => sub { Text::Levenshtein::Damerau::PP::pp_edistance(@strings) },
+    Damerau_XS =>
+        sub { Text::Levenshtein::Damerau::XS::xs_edistance(@strings) },
+    Dice           => sub { Text::Dice::coefficient(@strings) },
+    Fuzzy          => sub { Text::Fuzzy::distance_edits(@strings) },
+    Levenshtein    => sub { Text::Levenshtein::distance(@strings) },
+    Levenshtein_XS => sub { Text::Levenshtein::XS::distance(@strings) },
+    LevenshteinXS  => sub { Text::LevenshteinXS::distance(@strings) },
+    Similarity     => sub { String::Similarity::similarity(@strings) },
+    WagnerFischer  => sub { Text::WagnerFischer::distance(@strings) },
 );
 
 my @tests = (
