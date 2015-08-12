@@ -1,5 +1,8 @@
 Revision history for Text-Dice
 
+0.06  Wed Aug 12 05:48:32 UTC 2015
+    - Fixed pod formatting of benchmark results.
+
 0.05  Tue Aug 11 16:45:54 UTC 2015
     - Update benchmark results.
 
